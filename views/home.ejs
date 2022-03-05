@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="./style.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="border">
+      <header>TODO APP</header>
+      <br />
+      <div class="container p-2">
+        <form method="post" action="/todo/add">
+        <div class="input-group mb-3">
+            <input type="text" name="task" value="" placeholder="Enter a task" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <input type="submit" value="Submit" class="btn btn-outline-secondary btn-primary text-white" type="button"></input>
+            </div>
+          </div>
+        </form>
+
+        <ul class="list-group">
+          <% tasks.forEach( todo => { %> 
+            <li class="list-group-item">
+            <% if(todo.complete) { %>
+            <div class="alert-success p-2">
+            <p class=" d-inline-block"><%= todo.task %></p>
+            <form class="d-inline-block"
+              action="/todo/<%= todo._id%>/delete?_method=DELETE"
+              method="POST"
+            >
+              <button class="p-2 btn btn-danger">Delete</button>
+            </form>
+        </div>
+            <% } else { %>
+            <div class="alert-primary p-2">
+            <p class=" d-inline-block"><%= todo.task %></p>
+            <form class="d-inline-block"
+              action="/todo/<%= todo._id%>/complete?_method=PUT"
+              method="POST"
+            >
+              <button class="p-2 btn btn-success">Mark complete</button>
+            </form>
+            <form class=" d-inline-block"
+              action="/todo/<%= todo._id%>/delete?_method=DELETE"
+              method="POST"
+            >
+              <button class="p-2 btn btn-danger">Delete</button>
+            </form>
+        </div>
+            <%}%>
+            
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
